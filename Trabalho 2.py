@@ -1,30 +1,78 @@
 import requests
-Url = "https://eldenring.fanapis.com/api/locations"
-Response = requests.get(Url)
-print(Response)
-Dados = Response.json()
-locais = Dados["data"]
-for local in locais:
-    print (local["name"])
-Escolha = input("Escolha um local ")
-for local in locais:
-    if Escolha == local["name"]:
-        print(local["description"])
-while True:
-    Escolha = input("Escolha um local: ")
-    encontrado = False
-
+def wiki_dos_bosses():
+    Url = "https://eldenring.fanapis.com/api/locations"
+    Response = requests.get(Url)
+    print(Response)
+    Dados = Response.json()
+    locais = Dados["data"]
+    for local in locais:
+        print (local["name"])
+    Escolha = input("Escolha um local ")
     for local in locais:
         if Escolha == local["name"]:
             print(local["description"])
-            encontrado = True
+    while True:
+        Escolha = input("Escolha um local: ")
+        encontrado = False
+
+        for local in locais:
+            if Escolha == local["name"]:
+                print(local["description"])
+                encontrado = True
+                break
+
+        if encontrado:
+            break  # Sai do loop se encontrou o local
+        else:
+            print("Local não encontrado. Por favor, tente novamente.")
+def Wiki_dos_locais():
+    Url = "https://eldenring.fanapis.com/api/bosses"
+    Response = requests.get(Url)
+    print(Response)
+    Dados = Response.json()
+    Criaturas = Dados["data"] 
+    for Bosses in Criaturas:
+        print (Bosses["name"])
+    Escolha = input("Escolha um Boss ")
+    for Bosses in Criaturas:
+        if Escolha == Bosses["name"]:
+            print(Bosses["description"])
+    while True:
+        Escolha = input("Escolha um Boss")
+        encontrado = False
+
+        for Bosses in Criaturas:
+            if Escolha == Bosses["name"]:
+                print(Bosses["description"])
+                encontrado = True
+                break
+
+        if encontrado:
+            break  # Sai do loop se encontrou o local
+        else:
+            print("Local não encontrado. Por favor, tente novamente.")
+def menu_inicial():
+    print("=== Bem-vindo a EldenWiki! ===")
+    while True:
+        print("\nEscolha com o que deseja começar:")
+        print(" 1 → Descobrir Bosses")
+        print(" 2 → Descobrir Localizações")
+        print(" 0 → Sair")
+        escolha = input("Digite sua opção (1/2/0): ")
+
+        if escolha == "1":
+            wiki_dos_bosses()
+        elif escolha == "2":
+            Wiki_dos_locais()
+        elif escolha == "0":
+            print("Encerrando o programa. Até mais!")
             break
+        else:
+            print("Opção inválida. Tente novamente.")
 
-    if encontrado:
-        break  # Sai do loop se encontrou o local
-    else:
-        print("Local não encontrado. Por favor, tente novamente.")
-
+# Execução principal
+if __name__ == "__main__":
+    menu_inicial()
 
     #codigo perfeito onde ele entrega os locais e para quando nao tem mais oq entregar sem erro.
     #print(Dados)
