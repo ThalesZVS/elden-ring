@@ -11,7 +11,7 @@ def wiki_dos_bosses():
     for local in locais:
         if Escolha == local["name"]:
             print(local["description"])
-    print("Digite 1 ")
+    print("Digite 1 para continuar o 0 para sair para o menu inicial.")
     Escolha2 = int(input())
     if Escolha2 == 1:
         Wiki_dos_locais()
@@ -43,7 +43,7 @@ def Wiki_dos_locais():
     for Bosses in Criaturas:
         if Escolha == Bosses["name"]:
             print(Bosses["description"])
-            print("Digite 2 ")
+            print("Digite 2 para continuar ou 0 para sair para o menu inicial.")
             Escolha2 =int(input())
             if Escolha2 == 2:
                 wiki_dos_bosses()
@@ -69,19 +69,108 @@ def menu_inicial():
         print("\nEscolha com o que deseja começar:")
         print(" 1 → Descobrir Localizações")
         print(" 2 → Descobrir Bosses")
+        print(" 3 → Descobrir Criaturas")
+        print(" 4 → Descobrir Npcs")
+        print(" 5 → Descobrir armas")
         print(" 0 → Sair")
-        escolha = input("Digite sua opção (1/2/0): ")
+        escolha = input("Escolha uma funçâo (1/2/3/4/5/0): ")
 
         if escolha == "1":
            wiki_dos_bosses()
         elif escolha == "2":
            Wiki_dos_locais()
+        elif escolha == "3":
+            wiki_das_criaturas()
+        elif escolha == "4":
+            wiki_da_armas()
+        elif escolha == "5":
+            wiki_dos_npcs()      
         elif escolha == "0":
             print("Encerrando o programa. Até mais!")
             break
         else:
             print("Opção inválida. Tente novamente.")
 
+def wiki_das_criaturas():
+    Url = "https://eldenring.fanapis.com/api/creatures"
+    Response = requests.get(Url)
+    print(Response)
+    Dados = Response.json()
+    especies = Dados["data"]
+    for especime in especies:
+        print (especime["name"])
+    Escolha = input("Escolha uma Criatura ")
+    for especime in especies:
+        if Escolha == especime["name"]:
+            print(especime["description"])
+
+            print("Digite 3 para continuar ou 0 para sair para o menu inicial.")
+            Escolha2 =int(input())
+            if Escolha2 == 3:
+                wiki_das_criaturas()
+            elif Escolha2 == 0:
+                menu_inicial()
+    while True:
+        Escolha = input("Escolha uma Criatura ")
+        encontrado = False
+        for especime in especies:
+            if Escolha == especime["name"]:
+                print(especime["description"])
+                encontrado = True
+                break
+
+def wiki_dos_npcs():
+    Url = "https://eldenring.fanapis.com/api/npcs"
+    Response = requests.get(Url)
+    print(Response)
+    Dados = Response.json()
+    Npcs = Dados["data"]
+    for npc in Npcs:
+        print (npc["name"])
+    Escolha = input("Escolha um npc ")
+    for npc in Npcs:
+        if Escolha == npc["name"]:
+            print(npc["role"])
+            print("Digite 4 para continuar ou 0 para sair para o menu inicial.")
+            Escolha2 =int(input())
+            if Escolha2 == 4:
+                wiki_dos_npcs()
+            elif Escolha2 == 0:
+                menu_inicial()
+    while True:
+          Escolha = input("Escolha um npc ")  
+          encontrado = False
+          for npc in Npcs:
+              if Escolha == npc["name"]:
+                  print(npc["role"])
+                  encontrado = True
+                  break
+def wiki_da_armas():
+    Url = "https://eldenring.fanapis.com/api/weapons"
+    Response = requests.get(Url)
+    print(Response)
+    Dados = Response.json()
+    armas = Dados["data"]
+    for arma in armas():
+        print (arma["name"])
+    Escolha = input("Escolha uma arma")
+    for arma in armas():
+        if Escolha == arma["name"]:
+            print(arma["name"])
+            print("Digite 5 para continuar ou 0 para sair para o menu inicial.")
+            Escolha2 =int(input())
+            if Escolha2 == 5:
+                wiki_da_armas()
+            elif Escolha2 == 0:
+                menu_inicial()
+    while True:
+          Escolha = input("Escolha uma arma") 
+          encontrado = False
+          for arma in armas:
+              if Escolha == arma["name"]:
+                  print(arma["name"])
+                  encontrado = True
+                  break
 # Execução principal
 if __name__ == "__main__":
     menu_inicial()
