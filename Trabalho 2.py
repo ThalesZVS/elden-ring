@@ -72,8 +72,9 @@ def menu_inicial():
         print(" 3 → Descobrir Criaturas")
         print(" 4 → Descobrir Npcs")
         print(" 5 → Descobrir armas")
+        print(" 6 → Descobrir classes")
         print(" 0 → Sair")
-        escolha = input("Escolha uma funçâo (1/2/3/4/5/0): ")
+        escolha = input("Escolha uma funçâo (1/2/3/4/5/6/0): ")
 
         if escolha == "1":
            wiki_dos_bosses()
@@ -82,9 +83,11 @@ def menu_inicial():
         elif escolha == "3":
             wiki_das_criaturas()
         elif escolha == "4":
-            wiki_da_armas()
+            wiki_dos_npcs()
         elif escolha == "5":
-            wiki_dos_npcs()      
+            wiki_da_armas()      
+        elif escolha == "6":
+            wiki_das_classes()      
         elif escolha == "0":
             print("Encerrando o programa. Até mais!")
             break
@@ -151,24 +154,51 @@ def wiki_da_armas():
     print(Response)
     Dados = Response.json()
     armas = Dados["data"]
-    for arma in armas():
+    for arma in armas:
         print (arma["name"])
-    Escolha = input("Escolha uma arma")
-    for arma in armas():
+    Escolha = input("Escolha uma arma ")
+    for arma in armas:
         if Escolha == arma["name"]:
-            print(arma["name"])
-            print("Digite 5 para continuar ou 0 para sair para o menu inicial.")
+            print(arma["description"])
+            print("Digite 5 para continuar ou 0 para sair para o menu inicial. ")
             Escolha2 =int(input())
             if Escolha2 == 5:
                 wiki_da_armas()
             elif Escolha2 == 0:
                 menu_inicial()
     while True:
-          Escolha = input("Escolha uma arma") 
+          Escolha = input("Escolha uma arma ") 
           encontrado = False
           for arma in armas:
               if Escolha == arma["name"]:
                   print(arma["name"])
+                  encontrado = True
+                  break
+def wiki_das_classes():
+    Url = "https://eldenring.fanapis.com/api/classes"
+    Response = requests.get(Url)
+    print(Response)
+    Dados = Response.json()
+    classes = Dados["data"]
+    status = Dados["stats"]
+    for classe in classes:
+        print (classe["name"])
+    Escolha = input("Escolha uma classe ")
+    for classe in classes:
+        if Escolha == classe["name"]:
+            print(classe["description"] status["level"])
+            print("Digite 6 para continuar ou 0 para sair para o menu inicial. ")
+            Escolha2 =int(input())
+            if Escolha2 == 5:
+                wiki_das_classes()
+            elif Escolha2 == 0:
+                menu_inicial()
+    while True:
+          Escolha = input("Escolha uma classe ") 
+          encontrado = False
+          for classe in classes:
+              if Escolha == classe["name"]:
+                  print(classe["name"])
                   encontrado = True
                   break
 # Execução principal
