@@ -180,13 +180,13 @@ def wiki_das_classes():
     print(Response)
     Dados = Response.json()
     classes = Dados["data"]
-    status = Dados["stats"]
     for classe in classes:
         print (classe["name"])
     Escolha = input("Escolha uma classe ")
     for classe in classes:
         if Escolha == classe["name"]:
-            print(classe["description"] status["level"])
+            print(classe["description"])
+            print(classe["stats"])
             print("Digite 6 para continuar ou 0 para sair para o menu inicial. ")
             Escolha2 =int(input())
             if Escolha2 == 5:
